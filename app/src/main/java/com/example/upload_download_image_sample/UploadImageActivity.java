@@ -45,7 +45,7 @@ public class UploadImageActivity extends Activity {
 
         RecyclerView recyclerView = findViewById(R.id.gallery_recycler_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.addItemDecoration(new DividerGridItemDecoration(this, R.drawable.divider_bg1));
         progressImages = getProgressImage();
         adapter = new GridRecyclerViewAdapter(this, progressImages);
@@ -87,6 +87,12 @@ public class UploadImageActivity extends Activity {
                 TransferByteArrayOutputStream bos = new TransferByteArrayOutputStream(new TransferByteArrayOutputStream.ProgressListener() {
                     @Override
                     public void transferred(double progress) {
+                        //延迟处理，平滑处理
+                        try {
+                            Thread.sleep(5);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         updateCurProgress(totalLen, progress);
                     }
                 });

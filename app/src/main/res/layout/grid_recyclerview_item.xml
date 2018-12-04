@@ -9,7 +9,7 @@
     <com.example.upload_download_image_sample.ui.widget.ProgressImageView
         android:id="@+id/grid_item_img"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
         android:gravity="center"
         android:scaleType="centerCrop" />
