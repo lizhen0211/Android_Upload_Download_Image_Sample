@@ -60,7 +60,7 @@ public class UploadImageActivity extends Activity {
     }
 
     public void requestUpload(File file, String fileName, String source, final int index) {
-        MultipartRequest request = new MultipartRequest("https://uustorage-t.uucin.com/storages/images", new Response.Listener<String>() {
+        MultipartRequest request = new MultipartRequest("[your_url]", new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
 
