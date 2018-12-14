@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.upload_download_image_sample.R;
+import com.example.upload_download_image_sample.ui.widget.CircleProgressImageView;
 import com.example.upload_download_image_sample.ui.widget.ProgressImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -40,6 +41,11 @@ public class GridRecyclerViewAdapter extends RecyclerView.Adapter<GridRecyclerVi
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View root = LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_recyclerview_item, parent, false);
         ViewHolder vh = new ViewHolder(root);
@@ -48,8 +54,18 @@ public class GridRecyclerViewAdapter extends RecyclerView.Adapter<GridRecyclerVi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        imageLoader.displayImage("file:///" + progressImages.get(position).imageURI.substring(1), holder.imageView, options);
-        holder.imageView.setProgress((int) progressImages.get(position).getProgress());
+        if (position < 3) {
+            imageLoader.displayImage("file:///" + progressImages.get(position).imageURI.substring(1), holder.progressImageView, options);
+            holder.progressImageView.setProgress((int) progressImages.get(position).getProgress());
+            holder.progressImageView.setVisibility(View.VISIBLE);
+            holder.circleProgressImageView.setVisibility(View.GONE);
+        } else {
+            imageLoader.displayImage("file:///" + progressImages.get(position).imageURI.substring(1), holder.circleProgressImageView, options);
+            holder.circleProgressImageView.setProgress((int) progressImages.get(position).getProgress());
+            holder.circleProgressImageView.setVisibility(View.VISIBLE);
+            holder.progressImageView.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -59,11 +75,14 @@ public class GridRecyclerViewAdapter extends RecyclerView.Adapter<GridRecyclerVi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ProgressImageView imageView;
+        private ProgressImageView progressImageView;
+
+        private CircleProgressImageView circleProgressImageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            imageView = (ProgressImageView) itemView.findViewById(R.id.grid_item_img);
+            progressImageView = (ProgressImageView) itemView.findViewById(R.id.grid_item_img_progress);
+            circleProgressImageView = (CircleProgressImageView) itemView.findViewById(R.id.grid_item_img_circle_progress);
         }
     }
 
